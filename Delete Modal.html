@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Expense Tracker</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f7f9f9;
+    }
+
+    .navbar {
+      background-color: #ff5c5c;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+    }
+
+    .navbar .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .navbar .menu a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 30px 0 10px;
+      color: #333;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto 30px;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px 20px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      font-weight: 600;
+    }
+
+    td:last-child a {
+      color: #ff5c5c;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: block;
+      margin: 20px auto 40px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .form-section {
+      display: none;
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .form-section label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    .form-section input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-section button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .form-section button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .modal-content table {
+      margin: 20px auto;
+      width: 100%;
+      box-shadow: none;
+    }
+
+    .modal-actions {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-cancel {
+      background-color: #6c757d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">Expense Tracker</div>
+    <div class="menu">
+      <a href="#">Dashboard</a>
+      <a href="#">Manage Expenses</a>
+      <a href="#">Manage Budgets</a>
+      <a href="#">Reports and Analytics</a>
+      <a href="#">Insights</a>
+    </div>
+  </div>
+
+  <div id="table-section">
+    <h2>Expenses</h2>
+    <table id="expense-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button class="btn" onclick="toggleForm()">Add New Expense</button>
+  </div>
+
+  <div id="form-section" class="form-section">
+    <h2 style="text-align:center;">Add New Expense</h2>
+    <form onsubmit="saveExpense(event)">
+      <label for="date">Date</label>
+      <input type="date" id="date" name="date" required />
+
+      <label for="category">Category</label>
+      <input type="text" id="category" name="category" required />
+
+      <label for="amount">Amount</label>
+      <input type="number" id="amount" name="amount" required />
+
+      <label for="description">Description</label>
+      <input type="text" id="description" name="description" required />
+
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Delete Expense</h2>
+      <p>Are you sure you want to delete this expense?</p>
+      <table>
+        <tr><th>Date</th><th>Category</th><th>Amount</th><th>Description</th></tr>
+        <tr id="modal-expense-details"></tr>
+      </table>
+      <div class="modal-actions">
+        <button class="btn-delete" onclick="confirmDelete()">Delete</button>
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    let deleteIndex = null;
+
+    function renderExpenses() {
+      const tbody = document.querySelector("#expense-table tbody");
+      tbody.innerHTML = "";
+      expenses.forEach((expense, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${expense.date}</td>
+          <td>${expense.category}</td>
+          <td>£${expense.amount}</td>
+          <td>${expense.description}</td>
+          <td><a onclick="deleteExpense(${index})">Delete</a></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function toggleForm() {
+      const form = document.getElementById("form-section");
+      const table = document.getElementById("table-section");
+      const isFormVisible = form.style.display === "block";
+      form.style.display = isFormVisible ? "none" : "block";
+      table.style.display = isFormVisible ? "block" : "none";
+    }
+
+    function saveExpense(event) {
+      event.preventDefault();
+      const newExpense = {
+        date: document.getElementById("date").value,
+        category: document.getElementById("category").value,
+        amount: parseFloat(document.getElementById("amount").value).toFixed(2),
+        description: document.getElementById("description").value
+      };
+      expenses.push(newExpense);
+      localStorage.setItem("expenses", JSON.stringify(expenses));
+      renderExpenses();
+      toggleForm();
+      event.target.reset();
+    }
+
+    function deleteExpense(index) {
+      deleteIndex = index;
+      const exp = expenses[index];
+      document.getElementById('modal-expense-details').innerHTML = `
+        <td>${exp.date}</td>
+        <td>${exp.category}</td>
+        <td>£${exp.amount}</td>
+        <td>${exp.description}</td>
+      `;
+      document.getElementById("deleteModal").style.display = "flex";
+    }
+
+    function confirmDelete() {
+      if (deleteIndex !== null) {
+        expenses.splice(deleteIndex, 1);
+        localStorage.setItem("expenses", JSON.stringify(expenses));
+        renderExpenses();
+        closeModal();
+      }
+    }
+
+    function closeModal() {
+      document.getElementById("deleteModal").style.display = "none";
+      deleteIndex = null;
+    }
+
+    window.onload = renderExpenses;
+  </script>
+</body>
+</html>

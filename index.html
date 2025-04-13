@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" type="text/css" href="register.html">
+  <title>Expense Tracker</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #f6f7f8;
+      color: #333;
+    }
+
+    .header {
+      background-color: #ff6b6b;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #f1f2f3;
+    }
+
+    .hero h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .cta-button {
+      background-color: #ff6b6b;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #ff4d4d;
+    }
+
+    .features {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      background-color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .feature {
+      max-width: 300px;
+      margin: 20px;
+    }
+
+    .feature img {
+      width: 40px;
+      margin-bottom: 15px;
+    }
+
+    .feature h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .feature p {
+      font-size: 0.95rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    Expense Tracker
+  </header>
+
+  <section class="hero">
+    <h2>Track Your Expenses Like Never Before</h2>
+    <p>Take control of your finances with our powerful Expense Tracker application.</p>
+    <button class="cta-button" onclick="window.location.href='register.html'">Sign Up Now</button>
+
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <img src="https://img.icons8.com/ios-filled/50/ff6b6b/wallet.png" alt="Wallet Icon" />
+      <h3>Manage Your Budget</h3>
+      <p>Easily create and customize budgets to stay on top of your spending.</p>
+    </div>
+    <div class="feature">
+      <img src="https://img.icons8.com/ios-filled/50/ff6b6b/combo-chart--v1.png" alt="Chart Icon" />
+      <h3>Analyze Your Expenses</h3>
+      <p>Visualize your expenses with interactive charts and insightful reports.</p>
+    </div>
+    <div class="feature">
+      <img src="https://img.icons8.com/ios-filled/50/ff6b6b/smartphone.png" alt="Mobile Icon" />
+      <h3>Access Anywhere</h3>
+      <p>Track your expenses on the go with our mobile-friendly app.</p>
+    </div>
+  </section>
+
+</body>
+</html>
